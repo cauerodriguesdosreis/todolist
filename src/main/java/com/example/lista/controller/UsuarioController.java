@@ -39,6 +39,7 @@ public class UsuarioController {
     public ResponseEntity<?> getUsuarioById(@PathVariable Long id){
         return ResponseEntity.ok(usuarioService.getUsuarioById(id));
     }
+
     @DeleteMapping("/{id}")
     public void deleteUsuarioById(@PathVariable Long id){
         usuarioService.deleteUsuarioById(id);
