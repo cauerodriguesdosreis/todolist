@@ -41,19 +41,23 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUsuarioById(@PathVariable Long id){
+    public ResponseEntity<?> deleteUsuarioById(@PathVariable Long id){
+
         usuarioService.deleteUsuarioById(id);
+        return ResponseEntity.ok().body("Usuário deletado com sucesso!");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUsuario (@PathVariable Long id, @RequestBody Usuario usuario){
-        return ResponseEntity.ok(usuarioService.updateUsuario(id, usuario));
+    public ResponseEntity<?> updateUsuario (@PathVariable Long id, @RequestBody UsuarioRequestDTO dto){
+        return ResponseEntity.ok(usuarioService.updateUsuario(id, dto   ));
     }
 
     @PostMapping("/{id}/tarefas")
     public ResponseEntity<?> createTarefaForUsuario(@PathVariable Long id,
                                                     @RequestBody @Valid TarefaRequestDTO dto) {
-        return ResponseEntity.ok(tarefaService.createTarefaForUsuario(id, dto));
+
+        tarefaService.createTarefaForUsuario(id, dto);
+        return ResponseEntity.ok().body("Tarefa criada com sucesso!");
     }
 
     @GetMapping("/{id}/tarefas")

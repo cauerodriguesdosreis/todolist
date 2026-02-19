@@ -23,9 +23,10 @@ public class TarefaService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public TarefaResponseDTO createTarefaForUsuario(Long usuarioId, @Valid TarefaRequestDTO dto){
+    public TarefaResponseDTO createTarefaForUsuario(Long usuarioId, TarefaRequestDTO dto){
         Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(UsuarioNotFoundException::new);
+
         Tarefa tarefa = new Tarefa(TarefaRequestDTO.class.cast(dto));
         tarefa.setUsuario(usuario);
         tarefaRepository.save(tarefa);
@@ -59,7 +60,7 @@ public class TarefaService {
         tarefaRepository.deleteById(id);
     }
 
-    public TarefaResponseDTO updateTarefaById(Long id, @Valid TarefaRequestDTO dto){
+    public TarefaResponseDTO updateTarefaById(Long id, TarefaRequestDTO dto){
         Tarefa tarefa = tarefaRepository.findById(id)
                 .orElseThrow(TarefaNotFoundException::new);
         tarefa.setNome(dto.getNome());

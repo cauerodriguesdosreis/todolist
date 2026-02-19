@@ -22,7 +22,7 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public UsuarioResponseDTO createUsuario(@Valid @RequestBody UsuarioRequestDTO dto){
+    public UsuarioResponseDTO createUsuario(UsuarioRequestDTO dto){
         if (usuarioRepository.findAll().stream().anyMatch(usuario -> usuario.getEmail().equals(dto.getEmail()))){
             throw new CreateUsuarioException();
         }
@@ -52,10 +52,13 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
 
-    public UsuarioResponseDTO updateUsuario(Long id, @Valid @RequestBody Usuario usuario){
+
+    public UsuarioResponseDTO updateUsuario(Long id, UsuarioRequestDTO dto) {
         if (!usuarioRepository.existsById(id)) {
             throw new UsuarioNotFoundException();
         }
+
+        Usuario usuario = new Usuario(dto);
         usuario.setId(id);
         usuarioRepository.save(usuario);
         return new UsuarioResponseDTO(usuario);
